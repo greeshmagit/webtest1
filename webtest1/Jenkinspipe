@@ -1,0 +1,26 @@
+pipeline
+{
+    agent any
+    stages
+    {
+        stage("Git checkout")
+        {
+            steps{
+                    git credentials Id:'greeshmagit', url:"https://github.com/greeshmagit/webtest1.git"
+                 }
+        }
+        stage("Maven build")
+        {
+           steps
+           {
+              sh "mvn clean package"
+           }
+        }
+        stage("deploy to tomcat")
+        {
+          steps
+          {
+              ssh agent(['tomcat-new'])
+              {
+                sh """
+                      scp -o strictHostkey checking=no target/myweb.war
