@@ -1,5 +1,5 @@
 pipeline{
-    agent any
+    agent slave-linux
     stages{
         stage("Git checkout"){
             steps{
