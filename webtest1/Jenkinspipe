@@ -14,7 +14,7 @@ pipeline{
         }
         stage("deploy to tomcat"){
           steps{
-              sshagent(['tomcat']){
+                sshagent(['jenkins_slave']){
                 sh """
                       scp -o strictHostkey checking=no target/webtest.war ec2-user@172.31.40.38:/opt/tomcat/webapps
                       ssh ec2-user@172.31.40.38/opt/tomcat/bin/shutdown.sh
