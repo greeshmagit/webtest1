@@ -8,8 +8,9 @@ pipeline{
         }
         stage("Maven build"){
            steps{
-              sh 'mvn clean package'
-           }
+                   sh 'mvn -f webtest1/pom.xml clean package'
+            
+                }
         }
         stage("deploy to tomcat"){
           steps{
