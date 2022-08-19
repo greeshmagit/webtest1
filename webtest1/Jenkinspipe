@@ -14,11 +14,14 @@ pipeline{
         }
         stage("deploy to tomcat"){
           steps{
-                sshagent(['jenkins_slave']){
+                sshagent(['tomcat']){
                 sh """
-                      scp -o strictHostkey checking=no target/webtest.war ec2-user@172.31.40.38:/opt/tomcat/webapps
-                      ssh ec2-user@172.31.40.38/opt/tomcat/bin/shutdown.sh
-                      ssh ec2-user@172.31.40.38/opt/tomcat/bin/startup.sh
+                      //copy war//
+                      scp -o StrictHostKeyChecking=no target/webtest.war ec2-user@172.31.1.31:/opt/tomcat/webapps
+                      //shutdown tomcat server//
+                      ssh ec2-user@172.31.1.31/opt/tomcat/bin/shutdown.sh
+                      //startup tomcat server//
+                      ssh ec2-user@172.31.1.31/opt/tomcat/bin/startup.sh
                    """
                }
             }
