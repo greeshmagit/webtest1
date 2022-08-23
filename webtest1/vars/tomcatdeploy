@@ -9,3 +9,6 @@ def call(ip,user,credId){
                       
                       //startup tomcat server//
                       sh 'ssh ${user}@${ip} /opt/tomcat/bin/startup.sh'
+                      
+                   }
+               }
