@@ -1,3 +1,4 @@
+@Library("webtestlib") _
 pipeline{
     agent{label "slave-linux"}
     stages{
