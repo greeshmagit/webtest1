@@ -1,4 +1,4 @@
-
+@Library("webtestlib") _
 pipeline{
     agent{label "slave-linux"}
     stages{
@@ -14,14 +14,13 @@ pipeline{
                 }
         }
         stage("deploy to tomcat"){
-          @Library("webtestlib") _
+        
           steps{
             
                 tomcatdeploy("172.31.1.31","ec2-user","tomcat")
                
                }
             }
-          }
        }
   }
                       
