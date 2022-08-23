@@ -14,17 +14,9 @@ pipeline{
         }
         stage("deploy to tomcat"){
           steps{
-                sshagent(['tomcat']){
-                
-                      //copy war//
-                      sh 'scp -o StrictHostKeyChecking=no webtest1/target/webtest.war ec2-user@172.31.1.31:/opt/tomcat/webapps'
-                      
-                      //shutdown tomcat server//
-                      sh 'ssh ec2-user@172.31.1.31 /opt/tomcat/bin/shutdown.sh'
-                      
-                      //startup tomcat server//
-                      sh 'ssh ec2-user@172.31.1.31 /opt/tomcat/bin/startup.sh'
-                  
+            
+                tomcatdeploy("172.31.1.31","ec2-user","tomcat")
+               
                }
             }
           }
