@@ -1,4 +1,4 @@
-def call(ip,user,credId){
+def call(user,ip,credId){
      sshagent(["credId"]){
                 
                       //copy war//
