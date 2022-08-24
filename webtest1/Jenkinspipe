@@ -1,6 +1,6 @@
 @Library("webtestlib") _
 pipeline{
-    agent{label "slave-linux"}
+    agent any
     stages{
         stage("Git checkout"){
             steps{
