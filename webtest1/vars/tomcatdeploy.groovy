@@ -1,5 +1,5 @@
 def call(user,ip,credId){
-     sshagent(["credId"]){
+     sshagent([${credId}]){
                 
                       //copy war//
                       sh 'scp -o StrictHostKeyChecking=no webtest1/target/webtest.war ${user}@${ip}:/opt/tomcat/webapps'
