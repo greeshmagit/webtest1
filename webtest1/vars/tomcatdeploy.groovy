@@ -1,5 +1,5 @@
-def call(credId,user,ip){
-     sshagent(['credId']){
+def call(credId,user,ip) {
+     sshagent(["credId"]) {
                 
                       //copy war//
                       sh 'scp webtest1/target/webtest.war ${user}@${ip}:/opt/tomcat/webapps'
