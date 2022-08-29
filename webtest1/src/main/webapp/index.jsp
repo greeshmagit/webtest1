@@ -1,7 +1,6 @@
 <html>
 <body>
 <h2>Hello World!</h2>
-  <h3>welcome to successful deployment of project to tomcat server</h3>
-  <h4>testing hook</h4>
-</body>
+  <h3>welcome to successful deployment of project development to tomcat server</h3>
+ </body>
 </html>
