@@ -17,10 +17,7 @@ parameters {
                 }
          }
          stage("deploy to tomcat"){
-             when{
-                      branch "qatest"
-                 }
-                        
+                                    
               steps{
                     tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                
