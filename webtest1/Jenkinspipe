@@ -15,23 +15,36 @@ parameters {
                    sh 'mvn -f webtest1/pom.xml clean package'
               }
         }
-        stage("deploy to tomcat"){
+        stage("deploy to main tomcat"){
             when{
                       branch "main"
                  }
 
-            when{
-                  branch "develop"
-                }
-
-            when{
-                  branch "qatest"
-                }
                 steps{
                     tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                }
             
               }
+              stage("deploy to develop tomcat"){
+                when{
+                          branch "develop"
+                     }
+    
+                    steps{
+                        tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+                   }
+                
+                  }
+                  stage("deploy to qatest tomcat"){
+                    when{
+                              branch "qatest"
+                         }
+        
+                        steps{
+                            tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+                       }
+                    
+                      }
 
        }
   }
