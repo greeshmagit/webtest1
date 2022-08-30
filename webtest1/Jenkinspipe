@@ -11,22 +11,28 @@ parameters {
                  }
         }
         stage("Maven build"){
-           when{
-                      branch "develop"
-                }
-                 steps{
+           steps{
                    sh 'mvn -f webtest1/pom.xml clean package'
               }
         }
         stage("deploy to tomcat"){
             when{
-                      branch "qatest"
+                      branch "main"
                  }
-                 steps{
-                    tomcatdeploy('ec2-user','172.31.1.31','tomcat')
-               
+
+            when{
+                  branch "develop"
                 }
-          }
+
+            when{
+                  branch "qatest"
+                }
+                steps{
+                    tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+               }
+            
+              }
+
        }
   }
                       
