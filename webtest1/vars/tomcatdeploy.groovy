@@ -12,13 +12,5 @@ def call(user,ip,credId) {
                       
                    }
                }
-def jenkinspipe = load "tomcatdevelop.groovy" 
-     jenkinspipe.call(develop) {
-          return ["${develop}"]
-     }
 
-def jenkinspipe = load "tomcatqatest.groovy" 
-     jenkinspipe.call(qatest) {
-     return ["${qatest}"]
-     }
 
