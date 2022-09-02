@@ -7,7 +7,7 @@ parameters {
     stages{
          stage("Git checkout"){
             steps{
-                     git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git', branch: params.selectbranch
+                     git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
                  }
         }
         stage("Maven build"){
@@ -18,39 +18,42 @@ parameters {
         stage("deploy to main tomcat"){
             when{
                        expression{
-                                    params.selectbranch == "main"
+                                    params.selectbranch == 'main'
                                  }
-                      //branch "main"
+                      //branch 'main'
                  }
 
                 steps{
-                         tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+                         return ['main']
+                         //tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                }
             
               }
               stage("deploy to develop tomcat"){
                 when{
                           expression{
-                                         params.selectbranch == "develop"
+                                        params.selectbranch == 'develop'
                                     }
-                          //branch "develop"
+                          //branch 'develop'
                      }
     
                     steps{
-                            tomcatdeploy('ec2-user','172.31.1.31','tomcat') 
+                             return ['develop']
+                             //tomcatdeploy('ec2-user','172.31.1.31','tomcat') 
                          }
                 
                   }
                   stage("deploy to qatest tomcat"){
                     when{
                                expression{
-                                               params.selectbranch == "qatest"
+                                               params.selectbranch == 'qatest'
                                          }
-                              //branch "qatest"
+                              //branch 'qatest'
                          }
         
                         steps{
-                                tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+                                return ['qatest']
+                                //tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                               }
                     
                       }
