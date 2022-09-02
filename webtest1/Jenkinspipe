@@ -2,6 +2,7 @@
 pipeline{
 parameters {
   choice choices: ['main', 'develop', 'qatest'], description: 'choose a branch to build', name: 'SelectBranch'
+  }
 }
     agent{label "slave-linux"}
     stages{
@@ -18,7 +19,7 @@ parameters {
         stage("deploy to main tomcat"){
             when {
                        expression {
-                                     params.selectbranch == 'main'
+                                     params.SelectBranch == 'main'
                                  }
                      
                  }
@@ -33,7 +34,7 @@ parameters {
               stage("deploy to develop tomcat"){
                 when {
                           expression {
-                                      params.selectbranch == 'develop'
+                                      params.SelectBranch == 'develop'
                                     }
                           //branch 'develop'//
                      }
@@ -48,7 +49,7 @@ parameters {
                   stage("deploy to qatest tomcat"){
                     when {
                                expression {
-                                            params.selectbranch == 'qatest'
+                                            params.SelectBranch == 'qatest'
                                          }
                               //branch 'qatest'//
                          }
