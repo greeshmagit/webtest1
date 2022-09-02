@@ -20,12 +20,13 @@ parameters {
                        expression{
                                     params.selectbranch == 'main'
                                  }
-                      //branch 'main'
+                      //branch 'main'//
                  }
 
                 steps{
-                         return ['main']
-                         //tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+                         invoke('main')
+                         echo "deployed main branch job"
+                         //tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
                }
             
               }
@@ -34,12 +35,13 @@ parameters {
                           expression{
                                         params.selectbranch == 'develop'
                                     }
-                          //branch 'develop'
+                          //branch 'develop'//
                      }
     
                     steps{
-                             return ['develop']
-                             //tomcatdeploy('ec2-user','172.31.1.31','tomcat') 
+                             invoke('develop')
+                             echo "deployed develop branch job"
+                             //tomcatdeploy('ec2-user','172.31.1.31','tomcat')// 
                          }
                 
                   }
@@ -48,12 +50,13 @@ parameters {
                                expression{
                                                params.selectbranch == 'qatest'
                                          }
-                              //branch 'qatest'
+                              //branch 'qatest'//
                          }
         
                         steps{
-                                return ['qatest']
-                                //tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+                                invoke('qatest')
+                                echo "deployed qatest branch job"
+                                //tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
                               }
                     
                       }
