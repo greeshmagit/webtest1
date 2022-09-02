@@ -7,7 +7,7 @@ parameters {
     stages{
          stage("Git checkout"){
             steps{
-                     git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
+                     git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git', branch:params.selectbranch
                  }
         }
         stage("Maven build"){
@@ -17,32 +17,41 @@ parameters {
         }
         stage("deploy to main tomcat"){
             when{
-                      branch "main"
+                       expression{
+                                    params.selectbranch == "main"
+                                 }
+                      //branch "main"
                  }
 
                 steps{
-                    tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+                         tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                }
             
               }
               stage("deploy to develop tomcat"){
                 when{
-                          branch "develop"
+                          expression{
+                                         params.selectbranch == "develop"
+                                    }
+                          //branch "develop"
                      }
     
                     steps{
-                        tomcatdeploy('ec2-user','172.31.1.31','tomcat')
-                   }
+                            tomcatdeploy('ec2-user','172.31.1.31','tomcat') 
+                         }
                 
                   }
                   stage("deploy to qatest tomcat"){
                     when{
-                              branch "qatest"
+                               expression{
+                                               params.selectbranch == "qatest"
+                                         }
+                              //branch "qatest"
                          }
         
                         steps{
-                            tomcatdeploy('ec2-user','172.31.1.31','tomcat')
-                       }
+                                tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+                              }
                     
                       }
 
