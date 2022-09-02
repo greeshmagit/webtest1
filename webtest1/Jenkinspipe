@@ -24,9 +24,8 @@ parameters {
                  }
 
                 steps{
-                         invoke('main')
                          echo "deployed main branch job"
-                         //tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
+                         tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                }
             
               }
@@ -35,13 +34,13 @@ parameters {
                           expression {
                                       params.SelectBranch == 'develop'
                                     }
-                          //branch 'develop'//
+                          
                      }
     
                     steps{
-                             invoke('develop')
+                          
                              echo "deployed develop branch job"
-                             //tomcatdeploy('ec2-user','172.31.1.31','tomcat')// 
+                             tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                          }
                 
                   }
@@ -50,13 +49,12 @@ parameters {
                                expression {
                                             params.SelectBranch == 'qatest'
                                          }
-                              //branch 'qatest'//
+                             
                          }
         
                         steps{
-                                invoke('qatest')
                                 echo "deployed qatest branch job"
-                                //tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
+                                tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                               }
                     
                       }
