@@ -16,9 +16,9 @@ parameters {
               }
         }
         stage("deploy to main tomcat"){
-            when{
-                       expression{
-                                    params.selectbranch == 'main'
+            when {
+                       expression {
+                                    return params.selectbranch == 'main'
                                  }
                       //branch 'main'//
                  }
@@ -31,9 +31,9 @@ parameters {
             
               }
               stage("deploy to develop tomcat"){
-                when{
-                          expression{
-                                        params.selectbranch == 'develop'
+                when {
+                          expression {
+                                        return params.selectbranch == 'develop'
                                     }
                           //branch 'develop'//
                      }
@@ -46,9 +46,9 @@ parameters {
                 
                   }
                   stage("deploy to qatest tomcat"){
-                    when{
-                               expression{
-                                               params.selectbranch == 'qatest'
+                    when {
+                               expression {
+                                              return params.selectbranch == 'qatest'
                                          }
                               //branch 'qatest'//
                          }
