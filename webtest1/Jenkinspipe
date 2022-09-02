@@ -3,7 +3,6 @@ pipeline{
 parameters {
   choice choices: ['main', 'develop', 'qatest'], description: 'choose a branch to build', name: 'SelectBranch'
   }
-}
     agent{label "slave-linux"}
     stages{
          stage("Git checkout"){
