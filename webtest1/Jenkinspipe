@@ -7,7 +7,7 @@ parameters {
     stages{
          stage("Git checkout"){
             steps{
-                     git branch: params.selectbranch, credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
+                     git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git', branch: params.selectbranch
                  }
         }
         stage("Maven build"){
