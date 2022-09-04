@@ -7,7 +7,7 @@ parameters {
     stages{
          stage("Git checkout"){
             steps{
-                     git branch: 'params.SelectBranch', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
+                     git branch: params.SelectBranch, credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
                  }
         }
         stage("Maven build"){
@@ -40,6 +40,7 @@ parameters {
                     steps{
                           
                              echo "deployed develop branch job"
+                             jenkinspipe.develop ()
                              tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                          }
                 
