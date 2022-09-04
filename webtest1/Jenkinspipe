@@ -32,7 +32,7 @@ parameters {
                               echo "deployed develop branch job"
                               
                             //  '''checkout([$class: ‘GitSCM’, branches: [[name: */develop]], userRemoteConfigs: [[url: 'https://github.com/greeshmagit/webtest1.git’]]])'''
-                                 (tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
+                                 //(tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
                          }
                  }
                   stage("qatest") {
@@ -48,7 +48,7 @@ parameters {
                                   echo "deployed qatest branch job"
                              
                              // '''checkout([$class: ‘GitSCM’, branches: [[name: */qatest]], userRemoteConfigs: [[url: 'https://github.com/greeshmagit/webtest1.git’]]])'''
-                                  tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
+                                 // tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
                               }
                     
                       }
@@ -64,6 +64,7 @@ parameters {
               }
        
        }
+   }
        
   
                       
