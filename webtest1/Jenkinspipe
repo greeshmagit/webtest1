@@ -7,7 +7,9 @@ parameters {
     stages{
           stage("Git checkout"){
             steps{
-                     git branch:'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
+                     git branch:'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
+                     checkout([$class: ‘GitSCM’, branches: [[name: ‘origin/develop’]], userRemoteConfigs: [[url: 'https://github.com/greeshmagit/webtest1.git’]]])
+                     checkout([$class: ‘GitSCM’, branches: [[name: ‘origin/qatest’]], userRemoteConfigs: [[url: 'https://github.com/greeshmagit/webtest1.git’]]])
                  }
           }
           stage("Maven build"){
