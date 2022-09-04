@@ -5,13 +5,12 @@ parameters {
   }
     agent{label "slave-linux"}
     stages{
-         
-        stage("Maven build"){
+          stage("Maven build"){
            steps{
                    sh 'mvn -f webtest1/pom.xml clean package'
               }
-        }
-        stage("deploy to main tomcat"){
+         }
+         stage("deploy to main tomcat"){
             when {
                        expression {
                                      params.SelectBranch == 'main'
