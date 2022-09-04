@@ -2,17 +2,12 @@
 pipeline{
   agent{label "slave-linux"}
     stages{
-        //stage("Git checkout"){
-            steps{
-                     git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
-                 }
-        }
-        stage("Maven build"){
+       stage("Maven build"){
            steps{
                    sh 'mvn -f webtest1/pom.xml clean package'
             
                 }
-        }//
+        }
         stage("deploy to tomcat"){
         
             steps{
