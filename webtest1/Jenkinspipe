@@ -12,14 +12,13 @@ parameters {
                                  }
                                  
                  }
-
-                steps{
+                 steps{
                          git branch:'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
                          echo "deployed main branch job"
                          //tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
-               }
+                 }
             
-              }
+          }
               stage("develop"){
                 when {
                           expression {
@@ -32,11 +31,10 @@ parameters {
                               git branch:'develop', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
                               echo "deployed develop branch job"
                               
-                            //  '''checkout([$class: ‘GitSCM’, branches: [[name: */develop’]], userRemoteConfigs: [[url: 'https://github.com/greeshmagit/webtest1.git’]]])'''
+                            //  '''checkout([$class: ‘GitSCM’, branches: [[name: */develop]], userRemoteConfigs: [[url: 'https://github.com/greeshmagit/webtest1.git’]]])'''
                                  (tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
                          }
-                
-                  }
+                 }
                   stage("qatest"){
                     when {
                                expression {
@@ -49,7 +47,7 @@ parameters {
                                 git branch:'qatest', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
                                   echo "deployed qatest branch job"
                              
-                             // '''checkout([$class: ‘GitSCM’, branches: [[name: */qatest’]], userRemoteConfigs: [[url: 'https://github.com/greeshmagit/webtest1.git’]]])'''
+                             // '''checkout([$class: ‘GitSCM’, branches: [[name: */qatest]], userRemoteConfigs: [[url: 'https://github.com/greeshmagit/webtest1.git’]]])'''
                                   tomcatdeploy('ec2-user','172.31.1.31','tomcat')//
                               }
                     
