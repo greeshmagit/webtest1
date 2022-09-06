@@ -52,14 +52,17 @@ parameters {
               }
               stage("nexus artifact"){
                   steps{
-                         nexusArtifactUploader artifacts: [[artifactId: 'webtest', classifier: '', file: 'webtest1/target/webtest.war', type: 'war']],
+                      script{
+                         def mavenPom = readMavenPom file:'pom.xml'
+                         def nexusRepoName = mavenPom.version.endsWith("SNAPSHOT") ? "mvn-web-snapshot" : "mvn-web-nex"
+                         nexusArtifactUploader artifacts: [[artifactId: 'webtest', classifier: '', file: 'webtest1/target/${mavenPom.version}.war', type: 'war']],
                          credentialsId: 'nexus',
                          groupId: 'com.greeshma',
                          nexusUrl: '172.31.15.210:8081', 
                          nexusVersion: 'nexus3', 
                          protocol: 'http',
-                         repository: 'mvn-web-nex', 
-                         version: '1.0-SNAPSHOT'
+                         repository: 'nexusRepoName', 
+                         version: '${mavenPom.version}'
                        }
                    }
                        
