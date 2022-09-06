@@ -61,7 +61,7 @@ parameters {
                          nexusUrl: '172.31.15.210:8081', 
                          nexusVersion: 'nexus3', 
                          protocol: 'http',
-                         repository: 'nexusRepoName', 
+                         repository: nexusRepoName, 
                          version: '${mavenPom.version}'
                        }
                    }
