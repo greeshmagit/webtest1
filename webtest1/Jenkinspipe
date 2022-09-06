@@ -50,7 +50,7 @@ parameters {
                          sh 'mvn -f webtest1/pom.xml clean package'
                      }
               }
-              stage("nexus artifact){
+              stage("nexus artifact"){
                   steps{
                          nexusArtifactUploader artifacts: [[artifactId: 'webtest', classifier: '', file: 'webtest1/target/webtest.war', type: 'war']],
                          credentialsId: 'nexus',
