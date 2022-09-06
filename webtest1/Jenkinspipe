@@ -53,7 +53,7 @@ parameters {
               stage("nexus artifact"){
                   steps{
                       script{
-                         def mavenPom = readMavenPom file:'pom.xml'
+                         def mavenPom = readMavenPom file:'webtest1/pom.xml'
                          def nexusRepoName = mavenPom.version.endsWith("SNAPSHOT") ? "mvn-web-snapshot" : "mvn-web-nex"
                          nexusArtifactUploader artifacts: [[artifactId: 'webtest', classifier: '', file: 'webtest1/target/${mavenPom.version}.war', type: 'war']],
                          credentialsId: 'nexus',
