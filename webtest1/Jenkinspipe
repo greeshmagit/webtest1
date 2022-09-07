@@ -62,7 +62,7 @@ parameters {
                          nexusVersion: 'nexus3', 
                          protocol: 'http',
                          repository: nexusRepoName, 
-                         version: ${'mavenPom.version'}
+                         version: mavenPom.version
                        }
                    }
                 }
