@@ -55,14 +55,14 @@ parameters {
                       script{
                          def mavenPom = readMavenPom file:'webtest1/pom.xml'
                          def nexusRepoName = mavenPom.version.endsWith("SNAPSHOT") ? "mvn-web-snapshot" : "mvn-web-nex"
-                         nexusArtifactUploader artifacts: [[artifactId: 'webtest', classifier: '', file: 'webtest1/target/mavenPom.war', type: 'war']],
+                         nexusArtifactUploader artifacts: [[artifactId: 'webtest', classifier: '', file: 'webtest1/target/webtest.war', type: 'war']],
                          credentialsId: 'nexus',
                          groupId: 'com.greeshma',
                          nexusUrl: '172.31.15.210:8081', 
                          nexusVersion: 'nexus3', 
                          protocol: 'http',
                          repository: nexusRepoName, 
-                         version: 'mavenPom.version'
+                         version: ${'mavenPom.version'}
                        }
                    }
                 }
