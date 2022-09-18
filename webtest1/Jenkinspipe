@@ -45,11 +45,16 @@ parameters {
                              }
                     
                       }
-                stage("Maven build"){
+                stage("Maven package"){
                 steps{
                          sh 'mvn -f webtest1/pom.xml clean package'
                      }
               }
+              stage("Docker build"){
+                  steps{
+                           sh "docker build -t pgreeshma/webtest app : v1 ."
+                        }
+               }
               stage("nexus artifact"){
                   steps{
                       script{
@@ -66,11 +71,11 @@ parameters {
                        }
                    }
                 }
-               stage("deploy"){
+               /*stage("deploy"){
                   steps{
                           tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                      }
-              }
+              }*/
        
        }
    }
