@@ -53,7 +53,7 @@ parameters {
               }
               stage("Docker build"){
                   steps{
-                           sh "docker build -t pgreeshma/webtest1app:v1 ."
+                           sh "docker build -t pgreeshma/webtest1/webtest:v1 ."
                         }
                }
              /*stage("nexus artifact"){
