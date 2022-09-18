@@ -60,7 +60,8 @@ parameters {
                stage("Docker push to nexus"){
                 steps{
                         /* withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'pwd', usernameVariable: 'user')]) {
-                          // some block
+                          sh "nexus login -u ${user} -p ${pwd}"
+                          sh "docker push admin/webtest:v1"
                          }*/
                         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pwd', usernameVariable: 'user')]) {
                           sh "docker login -u ${user} -p ${pwd}"
