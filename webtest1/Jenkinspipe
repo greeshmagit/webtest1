@@ -57,7 +57,18 @@ parameters {
                            /*docker build -t <tag-name> -f <file-name>*/
                         }
                }
-             /*stage("nexus artifact"){
+               stage("Docker push to nexus"){
+                steps{
+                        /* withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+                          // some block
+                         }*/
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+                          sh "docker login -u ${user} -p ${pwd}"
+                          sh "docker push pgreeshma/webtest:v1"
+                        }
+                      }
+                   }
+             /*stage("nexus artifact for maven"){
                   steps{
                       script{
                          def mavenPom = readMavenPom file:'webtest1/pom.xml'
