@@ -3,7 +3,8 @@ pipeline{
 parameters {
   choice choices: ['main', 'develop', 'qatest'], description: 'choose a branch to build', name: 'SelectBranch'
   }
-    agent{label "slave-linux"}
+    /*agent{label "slave-linux"}*/
+    agent any
     stages{
         stage("main"){
             when {
