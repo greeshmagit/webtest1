@@ -55,7 +55,7 @@ parameters {
                            sh "docker build -t pgreeshma/webtest app : v1 ."
                         }
                }
-              stage("nexus artifact"){
+             /*stage("nexus artifact"){
                   steps{
                       script{
                          def mavenPom = readMavenPom file:'webtest1/pom.xml'
@@ -71,7 +71,7 @@ parameters {
                        }
                    }
                 }
-               /*stage("deploy"){
+               stage("deploy"){
                   steps{
                           tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                      }
