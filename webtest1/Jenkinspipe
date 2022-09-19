@@ -69,8 +69,8 @@ parameters {
                         }
                       }
                    }
-                   '''stage("docker deploy dev"){
-                   steps{
+                   //stage("docker deploy dev"){//
+                   /*steps{
                            sshagent(['tomcat']){
                            
                                 /*from dockerhub repo*/
@@ -80,7 +80,7 @@ parameters {
                                  sh "ssh -o StrictHostkeyChecking=no ec2-user@172.31.32.18 docker run -d -p 8080 : 8080 --name tomcat admin/webtest:v1"
                                 }
                          }
-                   }'''
+                   }*/
                    /*stage("nexus artifact for maven"){
                   steps{
                       script{
