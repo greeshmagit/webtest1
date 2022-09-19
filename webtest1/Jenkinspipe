@@ -96,7 +96,7 @@ parameters {
                          version: mavenPom.version
                        }
                    }
-                }
+                }*/
                stage("deploy"){
                   steps{
                           /*tomcat deploy with tomcat server private ip
