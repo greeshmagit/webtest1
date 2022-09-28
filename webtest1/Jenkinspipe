@@ -9,6 +9,8 @@ parameters {
         stage("git checkout"){
               steps{
                       git branch:params.SelectBranch, credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
+                   }
+              }
         
        /*stage("main"){
             when {
