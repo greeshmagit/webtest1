@@ -6,7 +6,7 @@ parameters {
     /*agent{label "slave-linux"}*/
     agent any
     stages{
-        stage( git checkout){
+        stage("git checkout"){
               steps{
                       git branch:params.SelectBranch, credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
         
