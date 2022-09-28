@@ -3,10 +3,14 @@ pipeline{
 parameters {
   choice choices: ['main', 'develop', 'qatest'], description: 'choose a branch to build', name: 'SelectBranch'
   }
-    agent{label "slave-linux"}
-    /*agent any*/
+    /*agent{label "slave-linux"}*/
+    agent any
     stages{
-        stage("main"){
+        stage( git checkout){
+              steps{
+                      git branch:params.SelectBranch, credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
+        
+       /*stage("main"){
             when {
                        expression {
                                      params.SelectBranch == 'main'
@@ -45,7 +49,7 @@ parameters {
                                   echo "deployed qatest branch job"
                              }
                     
-                      }
+                      }*/
                 stage("Maven package"){
                 steps{
                          sh 'mvn -f webtest1/pom.xml clean package'
