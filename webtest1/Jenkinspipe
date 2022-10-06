@@ -7,86 +7,48 @@ parameters {
     agent any
     stages{
         stage("git checkout"){
-              steps{
+             steps{
                       git branch:params.SelectBranch, credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
-                   }
-              }
-        
-       /*stage("main"){
-            when {
-                       expression {
-                                     params.SelectBranch == 'main'
-                                 }
-                                 
-                 }
-                 steps{
-                         git branch:'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
-                         echo "deployed main branch job"
-                      }
+                  }
+        }
             
-          }
-              stage("develop") {
-                when {
-                          expression {
-                                      params.SelectBranch == 'develop'
-                                    }
-                          
-                     }
-    
-                    steps{
-                              git branch:'develop', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
-                              echo "deployed develop branch job"
-                         }
-                 }
-                  stage("qatest") {
-                    when {
-                               expression {
-                                            params.SelectBranch == 'qatest'
-                                         }
-                             
-                         }
-        
-                        steps{
-                                git branch:'qatest', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
-                                  echo "deployed qatest branch job"
-                             }
-                    
-                      }*/
-                stage("Maven package"){
-                steps{
+         stage("Maven package"){
+              steps{
                          sh 'mvn -f webtest1/pom.xml clean package'
-                     }
-              }
-              stage("Docker build"){
-                  steps{
+                   }
+         }
+         stage("Docker build"){
+              steps{
                            sh "docker build -t pgreeshma/webtest:v1 -f webtest1/Dockerfile ."
                            /*docker build -t <tag-name> -f <file-name>*/
-                        }
-               }
-               stage("Docker push to nexus"){
-                steps{
+                   }
+          }
+          stage("Docker push to nexus"){
+               steps{
                         /* withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'pwd', usernameVariable: 'user')]) {
                           sh "nexus login -u ${user} -p ${pwd}"
                           sh "docker push admin/webtest:v1"
                          }*/
+                         
+                         /* docker push to docker hub*/
                         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pwd', usernameVariable: 'user')]) {
                           sh "docker login -u ${user} -p ${pwd}"
                           sh "docker push pgreeshma/webtest:v1"
                         }
-                      }
                    }
-                   //stage("docker deploy dev"){//
-                   //steps{//
-                          // sshagent(['tomcat']){//
+          }
+          stage("docker deploy dev"){
+               steps{
+                           sshagent(['tomcat']){
                            
                                 /*from dockerhub repo*/
-                               //sh "ssh -o StrictHostkeyChecking=no ec2-user@172.31.32.18 docker run -d -p 8080  : 8080 --name tomcat pgreeshma/webtest:v1"//
+                               sh "ssh -o StrictHostkeyChecking=no ec2-user@172.31.32.18 docker run -d -p 8080  : 8080 --name tomcat pgreeshma/webtest:v1"
                                 
                                  /*from nexus repo*/
                                  //sh "ssh -o StrictHostkeyChecking=no ec2-user@172.31.32.18 docker run -d -p 8080 : 8080 --name tomcat admin/webtest:v1"//
-                                //}//
-                         //}//
-                   //}//
+                                }
+                     }
+          }
                    /*stage("nexus artifact for maven"){
                   steps{
                       script{
@@ -103,14 +65,17 @@ parameters {
                        }
                    }
                 }*/
-               stage("deploy"){
+              /* stage("deploy"){
                   steps{
-                          /*tomcat deploy with tomcat server private ip
-                          tomcatdeploy('ec2-user','172.31.1.31','tomcat')*/
-                          /* docker deploy with docker server private ip*/
+                          tomcat deploy with tomcat server private ip
+                          
+                          tomcatdeploy('ec2-user','172.31.1.31','tomcat')
+                          
+                          docker deploy with docker server private ip
+                          
                           tomcatdeploy('ec2-user','172.31.32.18','tomcat')
                      }
-              }
+              }*/
                    
        }
    }
