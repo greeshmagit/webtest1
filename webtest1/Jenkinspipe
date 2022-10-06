@@ -4,7 +4,7 @@ pipeline{
     stages{
       stage("Git checkout"){
             steps{
-                     git branch:'develop', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
+                     git credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
                  }
         }
        stage("Maven build"){
@@ -13,7 +13,7 @@ pipeline{
             
                 }
         }
-         stage("nexus artifact"){
+         /*stage("nexus artifact"){
                   steps{
                          script{
                          def mavenPom = readMavenPom file:'webtest1/pom.xml'
@@ -28,14 +28,38 @@ pipeline{
                          version: '${mavenPom.version}'
                        }
                     }
-              }
-            stage("deploy to tomcat"){
+              }*/
+              stage("Docker build"){
+              steps{
+                           sh "docker build -t pgreeshma/webtest:v1 -f webtest1/Dockerfile ."
+                   }
+          }
+          stage("Docker push to nexus"){
+               steps{              
+                         /* docker push to docker hub*/
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pwd', usernameVariable: 'user')]) {
+                          sh "docker login -u ${user} -p ${pwd}"
+                          sh "docker push pgreeshma/webtest:v1"
+                        }
+                   }
+          }
+          stage("docker deploy dev"){
+               steps{
+                           sshagent(['tomcat']){
+                           
+                                /*from dockerhub repo*/
+                               sh "ssh -o StrictHostkeyChecking=no ec2-user@172.31.32.18 docker run -d -p 8080  : 8080 --name tomcat pgreeshma/webtest:v1"
+                         }       
+                    }
+          }
+              
+            /*stage("deploy to tomcat"){
         
             steps{
                     tomcatdeploy('ec2-user','172.31.1.31','tomcat')
                
                }
-         }
+         }*/
        }
   }
                       
