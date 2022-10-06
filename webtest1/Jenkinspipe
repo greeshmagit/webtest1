@@ -5,7 +5,7 @@ pipeline{
     stages{
         stage("git checkout"){
              steps{
-                      git branch:main, credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
+                      git branch:'main', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git'
                   }
         }
             
