@@ -1,5 +1,11 @@
 @Library("webtestlib") _
 pipeline{
+    /*agent{
+             docker{
+                    Image 'maven'
+                    args '-v $HOME/.m2:/root/.m2
+                    }
+            }*/
     /*agent{label "slave-linux"}*/
     agent any
     stages{
