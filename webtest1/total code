@@ -32,6 +32,7 @@ parameters {
                                     }
                           
                      }
+                     
     
                     steps{
                               git branch:'develop', credentialsId: 'github-creds', url: 'https://github.com/greeshmagit/webtest1.git' 
@@ -115,3 +116,66 @@ parameters {
        }
    }
       
+      
+  @Library("GitLib") _
+pipeline{
+    agent any
+    
+    parameters {
+        choice choices: ['main','qa','develop'], description: 'building branch', name: 'BRANCH_NAME'
+    }
+    
+     stages{
+        stage("Checkout"){
+            steps{
+             git url: 'https://github.com/kiranreddy023/kiranreddy', branch: params.BRANCH_NAME
+            }
+        }
+            
+        stage("Build"){
+            steps{
+                sh "mvn clean package"
+            }
+        } 
+        
+        stage("develop"){
+           when{
+                expression{
+                    params.BRANCH_NAME == "develop"
+                }
+            }
+            
+            steps{
+                //call(id,user,ip,war)
+                deploy('Tomcat', "ec2-user", "123.123.92.188","Kiran-1.war")
+            }
+        }
+        
+        stage("QA"){
+           when{
+                expression{
+                    params.BRANCH_NAME == "qa"
+                }
+            }
+            
+            steps{
+                 //call(id,user,ip,war)
+                
+                deploy('Tomcat', "ec2-user", "123.123.46.183","Kiran-1.war")
+            }
+        }
+        
+        stage("Prod"){
+            when{
+                expression{
+                    params.BRANCH_NAME == "main"
+                }
+            }
+            steps{
+                 //call(id,user,ip,war)
+               
+                deploy('Tomcat', "ec2-user", "123.123.75.206","Kiran-1.war")
+            }
+        }
+    }
+}
