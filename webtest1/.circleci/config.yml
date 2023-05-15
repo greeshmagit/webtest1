@@ -10,5 +10,9 @@ workflow:
   build_now:
   jobs:
     - build
+    - tests:
+      requires:
+        - build
+
       
 
