@@ -1,18 +1,43 @@
 version: 2.1
 
 jobs:
-  build:
+  package:
     docker:
-    - image: cimg/webtest1:v2
+    - image: cimg/openjdk:11.0
     steps:
       - checkout
+      - run: mvn -f webtest1/pom.xml clean package
+          
+  build:
+    docker:
+    - image: cimg/openjdk:11.0
+    steps:
+      - checkout
+      - run: docker build -t pgreeshma/webtest:v1 -f webtest1/Dockerfile .
+  push:
+    docker:
+    - image: pgreeshma/webtest:v1
+    steps:
+      - checkout
+      #- run: docker login -u pgreeshma -p pgr55shma
+      - run: docker push pgreeshma/webtest:v1
+
+  deploy:
+    docker:
+    - image : pgreeshma/webtest:v1
+    steps:
+      - checkout
+      - run: ssh docker run -d -p 8080:8080 --name tomcat1 pgreeshma/webtest:v1
 workflow:
-  build_now:
+  version: 2.1
+  full_workflow:
   jobs:
     - build
-    - tests:
+    - push:
       requires:
         - build
-
+    - deploy:
+      requires:
+        - push
       
 
