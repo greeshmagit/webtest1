@@ -32,7 +32,10 @@ workflow:
   version: 2.1
   full_workflow:
   jobs:
-    - build
+    - package
+    - build:
+      requires:
+        - package
     - push:
       requires:
         - build
